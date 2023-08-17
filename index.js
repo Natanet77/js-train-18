@@ -188,18 +188,18 @@ console.log(decodeURIComponentWrapper("%E0%A4%A")); // виведе інформ
 function findEvenNumber(numbers) {
   let evenNumber;
   try {
-    for (const number of numbers) {
-      if (number % 2 !== 0) {
-        evenNumber = number;
-        throw new Error("У масиві немає чисел, що діляться на 2 без остачі!");
-      } else {
-        return number;
-      }
+    evenNumber = numbers.find((number) => number % 2 === 0);
+
+    if (evenNumber === undefined) {
+      throw new Error("У масиві немає чисел, що діляться на 2 без остачі!");
     }
+    return evenNumber;
   } catch (error) {
-    console.log(error.message);
+    return error.toString();
+  } finally {
+    console.log(numbers);
   }
-  console.log(numbers);
+
   // Створюємо змінну evenNumber без значення
   // Шукаємо перше число, що ділиться на 2 без остачі, та записуємо в нашу змінну.
   // Якщо такого числа немає, кидаємо помилку з повідомлення У масиві немає чисел, що діляться на 2 без остачі!.
@@ -340,13 +340,10 @@ console.log(processData([1, "two", 3]));
  */
 function evaluateExpression(expression) {
   try {
-    const evaluate = eval(expression);
-    return evaluate;
+    const result = eval(expression);
+    return result;
   } catch (error) {
-    if (error instanceof EvalError) {
-      return new Error("Помилка при виконанні функції eval");
-    }
-    return error;
+    return new EvalError("Помилка при виконанні функції eval");
   }
 
   // Повертаємо результат розрахунку
